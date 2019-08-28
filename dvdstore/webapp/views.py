@@ -11,7 +11,7 @@ def home(request):
 
     dvd2 = DVD()
     dvd2.name = 'Shawshank Redmption'
-    dvd2.desc = 'A movie about rape in prison'
+    dvd2.desc = 'A movie about rape in prison in the ass'
     dvd2.inStock = True
 
     dvd3 = DVD()

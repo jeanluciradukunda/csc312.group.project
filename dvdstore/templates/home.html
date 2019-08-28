@@ -1,3 +1,6 @@
+{%load static %}
+{% static "images" as baseUrl %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,11 +22,11 @@
         </h1>
   
         {% for dvd in dvds %}
-        <!-- Project One -->
+        <!-- Project -->
         <div class="row">
           <div class="col-md-7">
             <a href="#">
-              <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/330x400" alt="">
+              <img class="img-fluid rounded mb-3 mb-md-0" src="{{baseUrl}}/{{dvd.img}}"  alt="" style="width:400px;height:500px">
             </a>
           </div>
           <div class="col-md-5">

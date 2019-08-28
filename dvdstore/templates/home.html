@@ -17,8 +17,8 @@
     <div class="container">
 
         <!-- Page Heading -->
-        <h1 class="my-4">Page Heading
-          <small>Secondary Text</small>
+        <h1 class="my-4">DVD Store
+          <small>Logo can go here</small>
         </h1>
   
         {% for dvd in dvds %}
@@ -26,13 +26,19 @@
         <div class="row">
           <div class="col-md-7">
             <a href="#">
-              <img class="img-fluid rounded mb-3 mb-md-0" src="{{baseUrl}}/{{dvd.img}}"  alt="" style="width:400px;height:500px">
+              <img class="img-fluid rounded mb-3 mb-md-0" src="{{dvd.img.url}}"  alt="" style="width:400px;height:500px">
             </a>
           </div>
           <div class="col-md-5">
             <h3>{{dvd.name}}</h3>
             <p>{{dvd.desc}}</p>
-            <a class="btn btn-primary" href="#">In Stock - {{dvd.inStock}}</a>
+
+            {%if dvd.inStock %}
+            <a class="btn btn-primary" href="#">In Stock</a>
+            {%else %}
+            <a class="btn btn-primary" href="#" style="pointer-events: none; color:darkslategray">Out Of Stock</a>
+            {%endif%}
+
           </div>
         </div>
         <!-- /.row -->

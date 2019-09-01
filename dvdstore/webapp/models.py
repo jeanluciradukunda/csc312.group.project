@@ -1,6 +1,7 @@
 from django.db import models
 
-# Create your models here.
+#Here we will define our models, Like customer, employee etc. It will the be exported my django
+#into postgres server
 
 class DVD(models.Model):
     

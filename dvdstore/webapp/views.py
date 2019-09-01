@@ -11,7 +11,7 @@ def home(request):
     
     query = request.GET.get("query")
     if query:
-        dvds = DVD.objects.filter(Q(name__icontains=query))
+        dvds = DVD.objects.filter(Q(name__icontains=query))#Search Function according to name
 
     paginator = Paginator(dvds, 3) # Show 3 dvds per page
     page = request.GET.get('page')
@@ -25,7 +25,7 @@ def clerk(request):
 
     query = request.GET.get("query")
     if query:
-        dvds = DVD.objects.filter(Q(name__icontains=query))
+        dvds = DVD.objects.filter(Q(name__icontains=query)) #Search Function according to name
 
     paginator = Paginator(dvds, 3) # Show 3 dvds per page
     page = request.GET.get('page')

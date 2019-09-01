@@ -32,7 +32,7 @@
         {% for dvd in dvds %}
         <!-- Project -->
         <div class="row">
-          <div class="col-md-7">
+          <div class="col-md-5">
             <a href="#">
               <img class="img-fluid rounded mb-3 mb-md-0" src="{{dvd.img.url}}"  alt="" style="width:400px;height:500px">
             </a>
@@ -42,7 +42,8 @@
             <p>{{dvd.desc}}</p>
 
             {%if dvd.inStock %}
-            <a class="btn btn-primary" href="#">In Stock</a>
+            <a class="btn btn-primary " href="#" data-toggle="modal" data-target="#mymodal">In Stock</a>
+          
             {%else %}
             <a class="btn btn-primary" href="#" style="pointer-events: none; color:darkslategray">Out Of Stock</a>
             {%endif%}
@@ -50,9 +51,35 @@
           </div>
         </div>
         <!-- /.row -->
-    
         <hr>
         {%endfor%}
+
+<!-- The Modal -->
+<div class="modal" id="mymodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{dvd.name}}</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Modal body..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
         <!-- Pagination -->
         <div class="pagination">
             <span class="step-links">

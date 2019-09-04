@@ -14,7 +14,7 @@ def login(request):
             return redirect("/")
         else:
             messages.info(request,'Username or Password is incorrect')
-            return redirect('/')
+            return redirect('login.html')
     else:
         return render(request, 'login.html')
 
@@ -38,13 +38,13 @@ def register(request):
             user = User.objects.create_user(username=username, password=password1, email=email, first_name=first_name, last_name=last_name)
             user.save()
             messages.info(request, 'User Created')
-            return redirect('/')
+            return redirect('login.html')
         else:
             print('password does not match')
             messages.info(request, 'Password does not match')
             return redirect('register.html')
 
-        return redirect('/')
+        return redirect('login.html')
 
     else:
         return render(request, 'register.html')
@@ -53,3 +53,4 @@ def register(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+

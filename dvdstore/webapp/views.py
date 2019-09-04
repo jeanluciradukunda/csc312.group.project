@@ -5,8 +5,6 @@ from django.db.models import Q
 
 
 #This is the homepage for the User
-def index(request):
-    return render(request,'index.html')
     
 def home(request):
 

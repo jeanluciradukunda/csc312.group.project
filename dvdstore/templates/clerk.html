@@ -47,8 +47,11 @@
                                     <td><button type="button" class="btn btn-dark badge" style="color:firebrick; font-size:2rem"><strong>X</strong></button></td>
                                   </tr>
                                 {%endfor%}
-
+                                
+                                {%if user.is_superuser %}
                                 <a class="btn btn-primary" href="#" style="float:right" data-toggle="modal" data-target="#mymodal">Add Movie</a>
+                                {%endif%}
+                                
                                 <!-- The Modal -->
                                   <div class="modal" id="mymodal">
                                     <div class="modal-dialog">

@@ -1,6 +1,6 @@
 body {
     padding-top: 80px;
-    background-color: #202020;
+    background-color: #487A51;
     color: #CCC;
 }
 
@@ -8,3 +8,16 @@ body {
     z-index: 9999;
 }
 
+.navbar-brand{
+    color:forestgreen;
+}
+
+.sticky{
+    position: fixed;
+    top:0;
+    width:100%;
+}
+
+.table-body{
+    background-color: #487A51;
+}

@@ -29,7 +29,7 @@ class DVD(models.Model):
     Title= models.CharField(max_length=50)
     year = models.CharField(max_length=255) 
     genre = models.CharField(max_length=255)
-    InStock= models.BooleanField(default=False)
+    InStock= models.BooleanField(default=True)
     Synopsis= models.TextField()
     # Booking = models.IntegerField(default=1) 
     BookingPickup = models.CharField(max_length=255)

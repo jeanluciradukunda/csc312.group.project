@@ -34,6 +34,12 @@
                 {%endif%}
             </li>
 
+            <li class="nav-item">
+              {% if user.is_superuser %}
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal">Add User</a>
+              {%endif%}
+            </li>
+
             
           </ul>
           <form method="GET" action="" class="form-inline my-2 my-lg-0">
@@ -73,7 +79,9 @@
                                           <button type="button" class="btn btn-danger badge-pill" style="float: right">Check In</button>
                                         {%endif%}
                                     </td>
+                                    {% if user.is_superuser %}
                                     <td><button type="button" class="btn btn-dark badge" style="color:firebrick; font-size:2rem"><strong>X</strong></button></td>
+                                    {%endif%}
                                   </tr>
                                 {%endfor%}
                                 </tbody>

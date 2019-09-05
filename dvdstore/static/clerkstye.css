@@ -1,0 +1,10 @@
+body {
+    padding-top: 80px;
+    background-color: #202020;
+    color: #CCC;
+}
+
+.navbar {
+    z-index: 9999;
+}
+

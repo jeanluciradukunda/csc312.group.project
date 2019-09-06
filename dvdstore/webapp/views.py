@@ -33,7 +33,7 @@ def clerk(request):
     if query:
         dvds = DVD.objects.filter(Q(Title__icontains=query)) #Search Function according to name
 
-    paginator = Paginator(dvds, 3) # Show 3 dvds per page
+    paginator = Paginator(dvds, 6) # Show 3 dvds per page
     page = request.GET.get('page')
     dvds = paginator.get_page(page)  
     

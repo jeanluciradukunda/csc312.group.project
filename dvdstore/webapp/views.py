@@ -11,13 +11,13 @@ def home(request):
     dvds = DVD.objects.all() #imports dvds from database
     
     query = request.GET.get("query")
+    gen = request.GET.get("gen")
     if query: 
-        if  Q(Title__icontains=query) :
-            dvds = DVD.objects.filter(Q(Title__icontains=query))#Search Function according to name
-        elif Q(genre__icontains=query):
-            dvds = DVD.objects.filter(Q(genre__icontains=query))#Search Function according to name
+        dvds = DVD.objects.filter(Q(Title__icontains=query))#Search Function according to name
+    elif gen:
+        dvds = DVD.objects.filter(Q(genre__icontains=gen))#Search Function according to name
 
-    paginator = Paginator(dvds, 3) # Show 3 dvds per page
+    paginator = Paginator(dvds, 6) # Show 3 dvds per page
     page = request.GET.get('page')
     dvds = paginator.get_page(page)  
     

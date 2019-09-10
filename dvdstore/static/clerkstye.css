@@ -21,3 +21,11 @@ body {
 .table-body{
     background-color: #487A51;
 }
+
+.modal {
+    justify-content: center;
+    margin: 30px;
+    padding : 20px;
+
+}
+

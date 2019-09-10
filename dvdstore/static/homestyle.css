@@ -33,7 +33,7 @@ body {
     cursor: pointer;
 }
 .movie-tile img {
-    box-shadow: 7px 7px 12px #222;
+    box-shadow: 5px 5px 5px #222;
 }
 .scale-media {
     padding-bottom: 56.25%;
@@ -58,15 +58,29 @@ body {
 .container{
     
     display: flex;
-    align-items: center;
-    align-items:normal ;
-    align-self: flex-end;
+    /* align-items: center; */
+    /* align-items:normal ; */
+    /* align-self: flex-end; */
     justify-content: center;
     height: 100vh;
-    margin: 60px;
+    margin: 40px;
+    padding : 50px;
     
 }
 
 footer {
     position: fixed; bottom: 0;
 }
+
+.modal {
+    justify-content: center;
+    margin: 30px;
+    padding : 25px;
+
+}
+
+.card-img-top {
+    height: 50rem;
+    object-fit: cover;
+}
+

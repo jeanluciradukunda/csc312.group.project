@@ -35,6 +35,8 @@ class DVD(models.Model):
     BookingPickup = models.CharField(max_length=255)
     NumOfTimesRented= models.IntegerField(default=0)
     ImageDVD= models.ImageField(upload_to='pics')
+    PriceDVD = models.IntegerField(default=0)
+    NumDaysBooked = models.IntegerField(default=0)
     # user_id= models.ForeignKey(User,on_delete=models.CASCADE)
 
 

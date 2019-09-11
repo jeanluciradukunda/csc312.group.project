@@ -11,8 +11,8 @@
 </head>
 <body>
   
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark sticky">
-        <a class="navbar-brand" href="#" style="color: forestgreen">CLERK</a>
+    <nav class="navbar navbar-expand-lg navbar-light sticky" style="background-color: rgba(178, 34, 34, 0.781);">
+        <a class="navbar-brand" href="#" style="color: white" >CLERK PAGE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,10 +20,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/" style="color: forestgreen">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/" style="color: white">Home <span class="sr-only">(current)</span></a>
             </li>
             
-            <li class="nav-item" style="color: forestgreen">
+            <li class="nav-item" style="color: white">
               {% if user.is_superuser %}
               <a class="nav-link" href="/admin">Admin Page</a>
               {%endif%}
@@ -31,20 +31,20 @@
 
             <li class="nav-item">
                 {% if user.is_superuser %}
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal1" style="color: forestgreen">Add Movie</a>
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal1" style="color: white">Add Movie</a>
                 {%endif%}
             </li>
 
             <li class="nav-item ">
               {% if user.is_superuser %}
-              <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal2" style="color: forestgreen">Add User</a>
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal2" style="color: white">Add User</a>
               {%endif%}
             </li>
           </ul>
           <form method="GET" action="" class="form-inline my-2 my-lg-0">
               <a> Hello, {{user.first_name}}</a><br>
             <input class="form-control mr-sm-2" name ='query' type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
       </nav>
@@ -53,7 +53,7 @@
     <div class="container">
         <div class="card" style="table-layout: fixed;">
             <div class="card-body">
-              <p class="card-text" style="font: bold; color:forestgreen">DVD TABLE</p>
+              <p class="card-text" style="font: bold; color:firebrick">DVD TABLE</p>
                 <div class="table-body">
                         <table class="table table-striped table-dark">
                                 <thead>

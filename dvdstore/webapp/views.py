@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from .form import DocumentForm, BookingForm
+from django.contrib.auth.decorators import login_required, permission_required
 #This is the homepage for the User
     
 def home(request):
@@ -29,6 +30,9 @@ def home(request):
     return render(request, 'home.html', {'dvds':dvds}, {'genre':genre}) #renders the page
 
 #This is the page for clerks
+
+@login_required
+@permission_required('is_staff')
 def clerk(request):
     dvds = DVD.objects.all() #imports dvds from database
 

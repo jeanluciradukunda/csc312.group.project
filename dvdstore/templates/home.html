@@ -13,8 +13,8 @@
 </head>
 <body>
     <!-- Page Heading -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark sticky">
-      <a class="navbar-brand" href="#" style="color: forestgreen">DVD STORE NAME</a>
+    <nav class="navbar navbar-expand-lg navbar-light sticky"  style="background-color: rgba(178, 34, 34, 0.781);">
+      <a class="navbar-brand" href="#" style="color:white">VideoHaul</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,15 +22,15 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/" style="color: forestgreen">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/" style="color: white">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
               {% if user.is_staff %}
-            <a class="nav-link" href="clerk" style="color: forestgreen">Clerk</a>
+            <a class="nav-link" href="clerk" style="color: white">Clerk</a>
               {%endif%}
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: forestgreen">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
               Categories
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -42,7 +42,7 @@
                   <a class="dropdown-item" href="?gen=Horror">Horror</a>
             </div>
           </li>
-          <li class="nav-item" style="color: forestgreen">
+          <li class="nav-item" style="color: white">
               {% if not user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="accounts/register">Register</a>
@@ -56,9 +56,9 @@
           </li>
         </ul>
         <form method="GET" action="" class="form-inline my-2 my-lg-0">
-            <a> Hello, {{user.first_name}}  </a><br>
+            <a> Hello, {{user.first_name}}  .</a> <br>
           <input class="form-control mr-sm-2" name ='query' type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
     </nav>
@@ -74,10 +74,12 @@
           <h5 class="card-title">{{dvd.Title}}</h5>
           <div class='post-body'>
             <p class="card-text">{{dvd.Synopsis|safe|truncatewords:"20"|linebreaks}}</p>
-            <a href="https://en.wikipedia.org/wiki/{{ dvd.Title}}" style="color: forestgreen">read more</a>
+            <a href="https://en.wikipedia.org/wiki/{{ dvd.Title}}" style="color:crimson">read more</a>
           </div>
+
           {%if dvd.InStock %}
-            <a class="btn btn-success " href="#" data-toggle="modal" data-target="#mymodal{{dvd.id}}" >In Stock</a>
+            <a class="btn btn-success " href="#" data-toggle="modal" style="pointer-events: none;" >In Stock</a>
+            <a class="btn btn-light " href="#" data-toggle="modal" data-target="#mymodal{{dvd.id}}" >Book DVD</a>
           {%else %}
             <a class="btn btn-danger" href="#" style="pointer-events: none; color:darkslategray">Out Of Stock</a>
           {%endif%}

@@ -33,7 +33,7 @@ def home(request):
 #This is the page for clerks
 
 @login_required
-@permission_required('is_staff')
+
 def clerk(request):
     dvds = DVD.objects.all() #imports dvds from database
 

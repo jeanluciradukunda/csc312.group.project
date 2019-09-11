@@ -78,6 +78,6 @@ def booking(request):
     dvdID= request.POST['dvdID']
     numOfDays=request.POST['numDaysBooked']
     if(str(dvdID)!="" and str(numOfDays)!=""):
-        DVD.objects.filter(id=dvdID).update(BookingPickup=username,NumDaysBooked=numOfDays)
+        DVD.objects.filter(id=dvdID).update(BookingPickup=username,NumDaysBooked=numOfDays,InStock=False)
 
     return redirect('home')

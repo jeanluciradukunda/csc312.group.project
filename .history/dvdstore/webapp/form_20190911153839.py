@@ -6,3 +6,7 @@ class DocumentForm(forms.ModelForm):
         model = DVD
         fields = ('Title','year','genre','InStock','Synopsis','BookingPickup' ,'NumOfTimesRented','ImageDVD')
 
+class BookingForm(forms.ModelForm):
+    class Meta :
+        model = DVD
+        fields = ('Title', 'NumDaysBooked','NumOfTimesRented')

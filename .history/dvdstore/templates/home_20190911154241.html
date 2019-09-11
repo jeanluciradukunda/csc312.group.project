@@ -79,9 +79,7 @@
 
           {%if dvd.InStock %}
             <a class="btn btn-success " href="#" data-toggle="modal" style="pointer-events: none;" >In Stock</a>
-            {%if user.is_authenticated%}
-              <a class="btn btn-light " href="#" data-toggle="modal" data-target="#mymodal{{dvd.id}}" >Book DVD</a>
-            {%endif%}
+            <a class="btn btn-light " href="#" data-toggle="modal" data-target="#mymodal{{dvd.id}}" >Book DVD</a>
           {%else %}
             <a class="btn btn-danger" href="#" style="pointer-events: none; color:darkslategray">Out Of Stock</a>
           {%endif%}

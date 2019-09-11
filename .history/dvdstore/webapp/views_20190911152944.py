@@ -6,12 +6,7 @@ from django.contrib.auth.models import User, auth
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-<<<<<<< HEAD
 from .form import DocumentForm, BookingForm
-from django.contrib.auth.decorators import login_required, permission_required
-=======
-from .form import DocumentForm
->>>>>>> db26598c9b755a35175349c622b2e54a5a441195
 #This is the homepage for the User
     
 def home(request):
@@ -34,9 +29,6 @@ def home(request):
     return render(request, 'home.html', {'dvds':dvds}, {'genre':genre}) #renders the page
 
 #This is the page for clerks
-
-@login_required
-@permission_required('is_staff')
 def clerk(request):
     dvds = DVD.objects.all() #imports dvds from database
 
@@ -81,11 +73,10 @@ def model_form_upload(request):
     return redirect('/clerk')
 
 def booking(request):
+    user = User.objects.get(pk=request.user.id)
+    dvd = DVD.objects.get(pk=request.dvd.id)
 
-    username= request.POST['username']
-    dvdID= request.POST['dvdID']
-    numOfDays=request.POST['numDaysBooked']
-    if(str(dvdID)!="" and str(numOfDays)!=""):
-        DVD.objects.filter(id=dvdID).update(BookingPickup=username,NumDaysBooked=numOfDays)
+    if request.method == 'POST':
+        dvd.BookingPickup = user.first_name
 
-    return redirect('home')
+    return redirect('/home')

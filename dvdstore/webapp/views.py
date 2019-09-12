@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import DVD
+from .models import DVD, Transaction
 from django.core.paginator import EmptyPage,PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User, auth
@@ -35,6 +35,8 @@ def home(request):
 
 def clerk(request):
     dvds = DVD.objects.all() #imports dvds from database
+    trans = Transaction.objects.all() #imports dvds from database
+    users = User.objects.all() #imports dvds from database
 
     query = request.GET.get("query")
     if query:
@@ -44,7 +46,7 @@ def clerk(request):
     page = request.GET.get('page')
     dvds = paginator.get_page(page)  
     form=DocumentForm()
-    context_dict = { 'dvds':dvds ,'form': form}
+    context_dict = { 'dvds':dvds ,'form': form, 'trans':trans, 'users':users}
     return render(request, 'clerk.html',context_dict)
 
 def register2(request):

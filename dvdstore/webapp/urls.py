@@ -11,4 +11,6 @@ urlpatterns = [
     path('clerk/checkout',views.checkout, name='checkout'),
     path('clerk/checkoutProceed',views.checkoutProceed, name='checkoutProceed'),
     path('clerk/checkin',views.checkin, name='checkin'),
+    path('transactions/', views.transactions, name='transactions'),
+    path('userstbl/', views.userstbl, name='userstbl')
 ]

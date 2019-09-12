@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, auth
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required, permission_required
 from .form import DocumentForm
 #This is the homepage for the User
     
@@ -29,6 +30,9 @@ def home(request):
     return render(request, 'home.html', {'dvds':dvds}, {'genre':genre}) #renders the page
 
 #This is the page for clerks
+
+@login_required
+
 def clerk(request):
     dvds = DVD.objects.all() #imports dvds from database
 
@@ -72,12 +76,37 @@ def model_form_upload(request):
         
     return redirect('/clerk')
 
+
+
 def booking(request):
 
     username= request.POST['username']
     dvdID= request.POST['dvdID']
-    numOfDays=request.POST['numDaysBooked']
-    if(str(dvdID)!="" and str(numOfDays)!=""):
-        DVD.objects.filter(id=dvdID).update(BookingPickup=username,NumDaysBooked=numOfDays)
+    DVD.objects.filter(id=dvdID).update(BookingPickup=username)
 
+    return redirect('home')
+
+def checkout(request):
+    dvdID= request.POST['dvdID']
+    numOfDays=request.POST['numDaysBooked']
+    dvdPrice=request.POST['dvdPrice']
+    bill=numOfDays*dvdPrice
+
+
+    return render(request, 'clerk.html',{'bill':bill})
+
+def checkoutProceed(request):
+    dvdID= request.POST['dvdID']
+    numOfDays=request.POST['numDaysBooked']
+
+    DVD.objects.filter(id=dvdID).update(NumDaysBooked=numOfDays,InStock=False)
+
+
+    return redirect('/clerk')
+
+
+
+def checkin(request):
+    dvdID= request.POST['dvdID']
+    DVD.objects.filter(id=dvdID).update(BookingPickup='None',InStock=True,NumDaysBooked=0)
     return redirect('home')

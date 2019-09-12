@@ -72,7 +72,7 @@
                                   <tr>
                                     <th scope="row">{{dvd.id}}</th>
                                     <td>{{dvd.Title}}</td>
-                                    <td>{{dvd.Synopsis}}</td> 
+                                    <td>{{dvd.Synopsis|safe|truncatewords:"10"|linebreaks}}</td> 
                                     <td>{{dvd.year}}</td>
                                     <td>{{dvd.genre}}</td>
                                     <td>{{dvd.BookingPickup}}</td>

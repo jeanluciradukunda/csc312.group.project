@@ -29,3 +29,15 @@ body {
 
 }
 
+.modal-footer{
+    color: rgb(0, 0, 0);
+    border-color: #000000;
+  }
+.modal-body{
+    color: rgb(0, 0, 0);
+    border-color: #000000;
+  }
+.modal-title{
+    color: rgb(0, 0, 0);
+    border-color: #000000;
+  }

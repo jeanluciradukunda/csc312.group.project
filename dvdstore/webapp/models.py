@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 #Here we will define our models, Like customer, employee etc. It will the be exported my django
 #into postgres server
- 
+
 
 class Transaction(models.Model):
     users_ID= models.ForeignKey(User,on_delete=models.CASCADE)
@@ -12,6 +12,7 @@ class Transaction(models.Model):
     DueDate = models.CharField(max_length=255) 
     MovieTitle = models.CharField(max_length=255)
     Payment_Method= models.CharField(max_length=255)
+    Amount = models.IntegerField(default=0)
     
 
 class DVD(models.Model):
@@ -34,3 +35,9 @@ class Fraud(models.Model):
     FraudID=models.IntegerField()
     FraudScore=models.IntegerField()
     user_id= models.ForeignKey(User,on_delete=models.CASCADE)
+
+class Customer(models.Model):
+    users_ID= models.ForeignKey(User,on_delete=models.CASCADE)
+    phone_number= models.CharField(max_length=50)
+    address= models.CharField(max_length=50)
+    identification = models.CharField(max_length=13)

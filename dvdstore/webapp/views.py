@@ -1,12 +1,11 @@
 from django.shortcuts import render
-from .models import DVD, Transaction
+from .models import DVD, Transaction, Customer
 from django.core.paginator import EmptyPage,PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User, auth
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-from .form import DocumentForm, BookingForm 
 from django.contrib.auth.decorators import login_required, permission_required
 from .form import DocumentForm
 #This is the homepage for the User
@@ -38,6 +37,7 @@ def clerk(request):
     dvds = DVD.objects.all() #imports dvds from database
     trans = Transaction.objects.all() #imports dvds from database
     users = User.objects.all() #imports dvds from database
+    customer = Customer.objects.all() #imports dvds from database
 
     query = request.GET.get("query")
     if query:
@@ -47,7 +47,7 @@ def clerk(request):
     page = request.GET.get('page')
     dvds = paginator.get_page(page)  
     form=DocumentForm()
-    context_dict = { 'dvds':dvds ,'form': form, 'trans':trans, 'users':users}
+    context_dict = { 'dvds':dvds ,'form': form, 'trans':trans, 'users':users, 'customer':customer}
     return render(request, 'clerk.html',context_dict)
 
 def register2(request):
@@ -79,12 +79,37 @@ def model_form_upload(request):
         
     return redirect('/clerk')
 
+
+
 def booking(request):
 
     username= request.POST['username']
     dvdID= request.POST['dvdID']
-    numOfDays=request.POST['numDaysBooked']
-    if(str(dvdID)!="" and str(numOfDays)!=""):
-        DVD.objects.filter(id=dvdID).update(BookingPickup=username,NumDaysBooked=numOfDays)
+    DVD.objects.filter(id=dvdID).update(BookingPickup=username)
 
+    return redirect('home')
+
+def checkout(request):
+    dvdID= request.POST['dvdID']
+    numOfDays=request.POST['numDaysBooked']
+    dvdPrice=request.POST['dvdPrice']
+    bill=numOfDays*dvdPrice
+
+
+    return render(request, 'clerk.html',{'bill':bill})
+
+def checkoutProceed(request):
+    dvdID= request.POST['dvdID']
+    numOfDays=request.POST['numDaysBooked']
+
+    DVD.objects.filter(id=dvdID).update(NumDaysBooked=numOfDays,InStock=False)
+
+
+    return redirect('/clerk')
+
+
+
+def checkin(request):
+    dvdID= request.POST['dvdID']
+    DVD.objects.filter(id=dvdID).update(BookingPickup='None',InStock=True,NumDaysBooked=0)
     return redirect('home')

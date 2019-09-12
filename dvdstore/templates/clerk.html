@@ -122,6 +122,7 @@
                                           <th scope="col">Due Date</th>
                                           <th scope="col">Movie Title</th>
                                           <th scope="col">Payment Method</th>
+                                          <th scope="col">Amount</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -133,6 +134,7 @@
                                           <td>{{tran.DueDate}}</td>
                                           <td>{{tran.MovieTitle}}</td>
                                           <td>{{tran.Payment_Method}}</td>
+                                          <td>{{tran.Amount}}</td>
                                           {% if user.is_superuser %}
                                           <td><button type="button" class="btn btn-dark badge" style="color:firebrick; font-size:2rem"><strong>X</strong></button></td>
                                           {%endif%}
@@ -160,6 +162,9 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">First Name</th>
                                         <th scope="col">Last Name</th>
+                                        <th scope="col">PhoneNumber</th>
+                                        <th scope="col">Address</th>
+                                        
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -170,6 +175,8 @@
                                         <td>{{use.email}}</td> 
                                         <td>{{use.first_name}}</td>
                                         <td>{{use.last_name}}</td>
+                                        <td>0</td>
+                                        <td>N/A</td>
                                         {% if user.is_superuser %}
                                         <td><button type="button" class="btn btn-dark badge" style="color:firebrick; font-size:2rem"><strong>X</strong></button></td>
                                         {%endif%}
@@ -257,7 +264,7 @@
 
           <!-- Modal footer -->
           <div class="modal-footer">
-            <form action="booking" enctype="multipart/form-data" method="POST">
+            <form action="checkout" enctype="multipart/form-data" method="POST">
               {% csrf_token %}
               <label >DVD ID:</label>
               <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>
@@ -268,7 +275,7 @@
               <input type="radio" id ="cash" name="payment"value="cash" checked ><label for="Cash">Cash</label><br>
               <input type="radio" id ="card" name="payment" value="card"><label for="Card">Card</label><br>
               <br><br>
-              <button type="submit" data-toggle="proceed{{dvd.id}}" data-dismiss="modal">checkout</button>
+              <button type="submit" data-toggle="proceed{{dvd.id}}" >checkout</button>
             </form> 
     </div>
 
@@ -277,48 +284,46 @@
       </div>
     </div>
     <!-- end modal -->
-    {%endfor%}
 
-    {%for dvd in dvds%}
     <!-- The proceed modal -->
     <div class="modal" id="proceed{{dvd.id}}">
-      <div class="modal-dialog">
-        <div class="modal-content">
-
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">{{dvd.Title}}</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-dialog">
+          <div class="modal-content">
+  
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">{{dvd.Title}} Proceed</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+  
+            <!-- Modal body -->
+            <div class="modal-body">
+              {{dvd.Synopsis|safe|truncatewords:"20"|linebreaks}}
+            </div>
+  
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <form action="booking" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <label >DVD ID:</label>
+                <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>
+                <br>
+                <label >Book DVD for:</label>
+                <input type="text" name="username" value="{{dvd.BookingPickup}}" readonly><br><br>
+                <br><br>
+                <button type="submit" data-dismiss="modal">checkout</button>
+              </form> 
+      </div>
+  
+            <div class="modal-div"></div>
           </div>
-
-          <!-- Modal body -->
-          <div class="modal-body">
-            {{dvd.Synopsis|safe|truncatewords:"20"|linebreaks}}
-          </div>
-
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <form action="booking" enctype="multipart/form-data" method="POST">
-              {% csrf_token %}
-              <label >DVD ID:</label>
-              <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>
-              <br>
-              <label >Book DVD for:</label>
-              <input type="text" name="username" value="{{dvd.BookingPickup}}" readonly><br><br>
-              <label >Number of Days:</label><br>
-              <input type="radio" id ="cash" name="payment"value="cash" checked ><label for="Cash">Cash</label><br>
-              <input type="radio" id ="card" name="payment" value="card"><label for="Card">Card</label><br>
-              <br><br>
-              <button type="submit" data-dismiss="modal">checkout</button>
-            </form> 
-    </div>
-
-          <div class="modal-div"></div>
         </div>
       </div>
-    </div>
-    <!-- end modal -->
+      <!-- end modal -->
+
     {%endfor%}
+
+  
 
     <!-- The Modal1 -->
     <div class="modal" id="mymodal1">

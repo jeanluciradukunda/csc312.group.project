@@ -68,10 +68,13 @@
   <div class="container card-group col-md-auto">
     {% for dvd in dvds %}
     <div class="col-md-4">
-      <div class="card grid-wrapper text-white bg-dark mb-3" style="height: 50rem">
-        <img class="img-fluid rounded card-img-top" src="{{dvd.ImageDVD.url}}" width="500" height="400" style="box-shadow: 3px 3px rgba(83, 83, 83, 0.644);">
+      <div class="card grid-wrapper text-white bg-dark mb-3" style="height: 60rem">
+        <img class="img-fluid rounded card-img-top" src="{{dvd.ImageDVD.url}}" width="400" height="200" style="box-shadow: 3px 3px rgba(83, 83, 83, 0.644);">
         <div class="card-body">
           <h5 class="card-title">{{dvd.Title}}</h5>
+          <h6 class="card-title" style="display: inline-block">{{dvd.genre}} : </h6>
+          <h6 class="card-title" style="display: inline-block">{{dvd.year}}</h6>
+          <h6 class="card-title">R{{dvd.PriceDVD}}</h6>
           <div class='post-body'>
             <p class="card-text">{{dvd.Synopsis|safe|truncatewords:"20"|linebreaks}}</p>
             <a href="https://en.wikipedia.org/wiki/{{ dvd.Title}}" style="color:crimson">read more</a>
@@ -109,22 +112,19 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                  <form action="booking" enctype="multipart/form-data" method="POST">
-                    {% csrf_token %}
-                    <label >DVD ID:</label>
-                    <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>
-                    <br>
-                    <label >Book DVD for:</label>
-                    <input type="text" name="username" value="{{user.username}}" readonly><br><br>
-                    <label >Number of Days:</label>
-                    <input type="number" name="numDaysBooked" min="1" max="3"><br>
-                    
-                    <button type="submit">book</button>
-                  </form> 
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          </div>
+                        <form action="booking" enctype="multipart/form-data" method="POST">
+                          {% csrf_token %}
+                          <label >DVD ID:</label>
+                          <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>
+                          <br>
+                          <label >Book DVD for:</label>
+                          <input type="text" name="username" value="{{user.username}}" readonly><br><br>
+                          
+                          <button type="submit">book</button>
+                        </form> 
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
 
-                <div class="modal-div"></div>
               </div>
             </div>
           </div>

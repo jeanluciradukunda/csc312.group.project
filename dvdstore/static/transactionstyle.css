@@ -1,0 +1,43 @@
+body {
+    padding-top: 80px;
+    background-color: rgb(41, 41, 41);
+    color: #CCC;
+}
+
+.navbar {
+    z-index: 9999;
+}
+
+.navbar-brand{
+    color:forestgreen;
+}
+
+.sticky{
+    position: fixed;
+    top:0;
+    width:100%;
+}
+
+.table-body{
+    background-color: #487A51;
+}
+
+.modal {
+    justify-content: center;
+    margin: 30px;
+    padding : 20px;
+
+}
+
+.modal-footer{
+    color: rgb(0, 0, 0);
+    border-color: #000000;
+  }
+.modal-body{
+    color: rgb(0, 0, 0);
+    border-color: #000000;
+  }
+.modal-title{
+    color: rgb(0, 0, 0);
+    border-color: #000000;
+  }

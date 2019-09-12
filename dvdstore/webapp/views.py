@@ -50,6 +50,42 @@ def clerk(request):
     context_dict = { 'dvds':dvds ,'form': form, 'trans':trans, 'users':users, 'customer':customer}
     return render(request, 'clerk.html',context_dict)
 
+@login_required
+def userstbl(request):
+    dvds = DVD.objects.all() #imports dvds from database
+    trans = Transaction.objects.all() #imports dvds from database
+    users = User.objects.all() #imports dvds from database
+    customer = Customer.objects.all() #imports dvds from database
+
+    query = request.GET.get("query")
+    if query:
+        users = User.objects.filter(Q(username__icontains=query)) #Search Function according to name
+
+    paginator = Paginator(dvds, 6) # Show 3 dvds per page
+    page = request.GET.get('page')
+    dvds = paginator.get_page(page)  
+    form=DocumentForm()
+    context_dict = { 'dvds':dvds ,'form': form, 'trans':trans, 'users':users, 'customer':customer}
+    return render(request, 'userstbl.html',context_dict)
+
+@login_required
+def transactions(request):
+    dvds = DVD.objects.all() #imports dvds from database
+    trans = Transaction.objects.all() #imports dvds from database
+    users = User.objects.all() #imports dvds from database
+    customer = Customer.objects.all() #imports dvds from database
+
+    query = request.GET.get("query")
+    if query:
+        trans = Transaction.objects.filter(Q(TransactionNumber__icontains=query)) #Search Function according to name
+
+    paginator = Paginator(dvds, 6) # Show 3 dvds per page
+    page = request.GET.get('page')
+    dvds = paginator.get_page(page)  
+    form=DocumentForm()
+    context_dict = { 'dvds':dvds ,'form': form, 'trans':trans, 'users':users, 'customer':customer}
+    return render(request, 'transactions.html',context_dict)
+
 def register2(request):
 
     if request.method == 'POST':

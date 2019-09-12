@@ -264,7 +264,7 @@
 
           <!-- Modal footer -->
           <div class="modal-footer">
-            <form action="booking" enctype="multipart/form-data" method="POST">
+            <form action="checkout" enctype="multipart/form-data" method="POST">
               {% csrf_token %}
               <label >DVD ID:</label>
               <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>

@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required, permission_required
 from .form import DocumentForm
+from django.contrib import messages
 #This is the homepage for the User
     
 def home(request):
@@ -18,10 +19,13 @@ def home(request):
     gen = request.GET.get("gen")
     if query: 
         dvds = DVD.objects.filter(Q(Title__icontains=query))#Search Function according to name
+        if  not DVD.objects.filter(Q(Title__icontains=query)).exists():
+            messages.info(request,'No search results for : '+query)
     elif gen:
         dvds = DVD.objects.filter(Q(genre__icontains=gen))#Search Function according to name
 
-    paginator = Paginator(dvds, 3) # Show 3 dvds per page
+
+    paginator = Paginator(dvds, 6) # Show 3 dvds per page
     page = request.GET.get('page')
     dvds = paginator.get_page(page)  
     

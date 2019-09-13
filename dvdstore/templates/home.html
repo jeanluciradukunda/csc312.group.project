@@ -133,6 +133,15 @@
   </div>
 <!-- END OF CONTENT -->
 
+<div>
+  {% if messages %}
+{%for message in messages%}
+  <script>alert('{{message}}')</script>
+{%endfor%}
+{% endif %}
+</div>
+
+
 <footer>
 <!-- Pagination -->
         <div class="pagination">

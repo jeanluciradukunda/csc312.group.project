@@ -1,0 +1,362 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'clerkstye.css'%}">
+    <title>Clerk</title>
+</head>
+<body>
+
+
+  <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky" style="background-color: rgba(178, 34, 34, 0.781);">
+        <a class="navbar-brand" href="#" style="color: white" >CLERK PAGE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/" style="color: white">Home <span class="sr-only">(current)</span></a>
+            </li>
+            
+            <li class="nav-item ">
+                {% if user.is_superuser %}
+                <a class="nav-link" href="../clerk" style="color: white">Clerk Page</a>
+                {%endif%}
+              </li>
+
+            <li class="nav-item" style="color: white">
+              {% if user.is_superuser %}
+              <a class="nav-link" href="/admin">Admin Page</a>
+              {%endif%}
+          </li>
+
+          <li class="nav-item ">
+              {% if user.is_superuser %}
+              <a class="nav-link" href="../transactions" style="color: white">Transactions</a>
+              {%endif%}
+            </li>
+
+          
+          <li class="nav-item ">
+                {% if user.is_superuser %}
+                <a class="nav-link" href="../userstbl" style="color: white">Users</a>
+                {%endif%}
+          </li>
+          
+          <li class="nav-item">
+              {% if user.is_superuser %}
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal1" style="color: white">Add Movie</a>
+              {%endif%}
+          </li>
+
+          <li class="nav-item ">
+            {% if user.is_superuser %}
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal2" style="color: white">Add User</a>
+            {%endif%}
+          </li>
+          </ul>
+
+          
+          <form method="GET" action="" class="form-inline my-2 my-lg-0">
+              <a> Hello, {{user.first_name}}</a><br>
+            <input class="form-control mr-sm-2" name ='query' type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+<a></a><br>
+<!-- END OF NAVIGATION BAR -->
+
+<!-- TABLES -->
+{%if not user.is_superuser %}
+    <!-- DVD Table -->
+    <div class="container">
+          <div class="card" style="table-layout: fixed;">
+            <div class="card-body"></div>
+                  <p class="" style="font: bold; color:firebrick">DVD Table</p>
+                    <div class="table-body">
+                            <table class="table table-striped table-dark">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Movie</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Year</th>
+                                        <th scope="col">Genre</th>
+                                        <th scope="col">Booked By</th>
+                                        <th scope="col">In Stock</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for dvd in dvds %}
+                                      <tr>
+                                        <th scope="row">{{dvd.id}}</th>
+                                        <td>{{dvd.Title}}</td>
+                                        <td>{{dvd.Synopsis|safe|truncatewords:"10"|linebreaks}}</td> 
+                                        <td>{{dvd.year}}</td>
+                                        <td>{{dvd.genre}}</td>
+                                        <td>{{dvd.BookingPickup}}</td>
+                                        <td>{{dvd.InStock}}</td>
+                                        <td>
+                                            {%if dvd.InStock %}
+                                                  {%if not dvd.BookingPickup == 'None' %}
+                                                      <button type="button" class="btn btn-success badge-pill" data-toggle="modal" data-target="#checkout{{dvd.id}}" style="float: right">Check Out</button>
+                                                  {%else%}
+                                                      <button type="button" class="btn btn-success badge-pill" style="pointer-events: none; color:darkslategray" data-toggle="modal" data-target="#checkout{{dvd.id}}" style="float: right">Check Out</button>
+                                                  {%endif%}
+                                            {%else %}
+                                              <button type="button" class="btn btn-danger badge-pill" style="float: right">Check In</button>
+                                            {%endif%}
+                                        </td>
+                                        {% if user.is_superuser %}
+                                        <td><button type="button" class="btn btn-dark badge" style="color:firebrick; font-size:2rem"><strong>X</strong></button></td>
+                                        {%endif%}
+                                      </tr>
+                                    {%endfor%}
+                                    </tbody>
+                                  </table>
+                    </div>
+            </div>
+          </div>  
+    </div>
+    <!-- end TABLE -->
+    {%else%}
+
+    <!-- DVD TABLE -->
+    <div class="container">
+        <div class="card" style="table-layout: fixed;">
+          <div class="card-body"></div>
+                <p class="" style="font: bold; color:firebrick">DVD Table</p>
+                  <div class="table-body">
+                          <table class="table table-striped table-dark">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">ID</th>
+                                      <th scope="col">Movie</th>
+                                      <th scope="col">Description</th>
+                                      <th scope="col">Year</th>
+                                      <th scope="col">Genre</th>
+                                      <th scope="col">Booked By</th>
+                                      <th scope="col">In Stock</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  {% for dvd in dvds %}
+                                    <tr>
+                                      <th scope="row">{{dvd.id}}</th>
+                                      <td>{{dvd.Title}}</td>
+                                      <td>{{dvd.Synopsis|safe|truncatewords:"10"|linebreaks}}</td> 
+                                      <td>{{dvd.year}}</td>
+                                      <td>{{dvd.genre}}</td>
+                                      <td>{{dvd.BookingPickup}}</td>
+                                      <td>{{dvd.InStock}}</td>
+                                      <td>
+                                          {%if dvd.InStock %}
+                                                {%if not dvd.BookingPickup == 'None' %}
+                                                    <button type="button" class="btn btn-success badge-pill" data-toggle="modal" data-target="#checkout{{dvd.id}}" style="float: right">Check Out</button>
+                                                {%else%}
+                                                    <button type="button" class="btn btn-success badge-pill" style="pointer-events: none; color:darkslategray" data-toggle="modal" data-target="#checkout{{dvd.id}}" style="float: right">Check Out</button>
+                                                {%endif%}
+                                          {%else %}
+                                            <div id="clickMe" method=>
+                                              <button type="button" class="btn btn-danger badge-pill" style="float: right">Check In</button>
+                                            </div>
+                                          {%endif%}
+                                      </td>
+                                      {% if user.is_superuser %}
+                                      <td><button type="button" class="btn btn-dark badge" style="color:firebrick; font-size:2rem"><strong>X</strong></button></td>
+                                      {%endif%}
+                                    </tr>
+                                  {%endfor%}
+                                  </tbody>
+                                </table>
+                  </div>
+          </div>
+        </div>  
+  </div>
+  <!-- end TABLE -->
+    {%endif%}
+
+  <!-- END OF ALL TABLES -->
+
+    {%for dvd in dvds%}
+    <!-- The checkout modal -->
+    <div class="modal" id="checkout{{dvd.id}}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">{{dvd.Title}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            {{dvd.Synopsis|safe|truncatewords:"20"|linebreaks}}
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <form action="checkout" enctype="multipart/form-data" method="POST">
+              {% csrf_token %}
+              <label >DVD ID:</label>
+              <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>
+              <br>
+              <label >Book DVD for:</label>
+              <input type="text" name="username" value="{{dvd.BookingPickup}}" readonly><br><br>
+              <label >Number of Days:</label>
+              <input type="number" name="numDaysBooked" value=1 min=1 max=3><br><br>
+              <label >Price per day: R</label>
+              <input type="text" name="dvdPrice" value="{{dvd.PriceDVD}}" readonly>
+              <br><br>
+              <input type="radio" id ="cash" name="payment"value="cash" checked ><label for="Cash">Cash</label><br>
+              <input type="radio" id ="card" name="payment" value="card"><label for="Card">Card</label><br>
+              <br><br>
+              <input type="hidden" name="user_ID" value="{{user.id}}" >
+              <input type="hidden" name="MovieTitle" value="{{dvd.Title}}" >
+              <!--users_ID=user_ID, TransactionNumber=, RentDate=, DueDate=, MovieTitle=MovieTitle, Payment_Method=payment,Amount=bill)-->
+              <button type="submit" data-toggle="proceed{{dvd.id}}" >checkout</button>
+            </form> 
+    </div>
+
+          <div class="modal-div"></div>
+        </div>
+      </div>
+    </div>
+    <!-- end modal -->
+
+    <!-- The proceed modal -->
+    <div class="modal" id="proceed{{dvd.id}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+  
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">{{dvd.Title}} Proceed</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+  
+            <!-- Modal body -->
+            <div class="modal-body">
+              {{dvd.Synopsis|safe|truncatewords:"20"|linebreaks}}
+            </div>
+  
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <form action="booking" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <label >DVD ID:</label>
+                <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>
+                <br>
+                <label >Book DVD for:</label>
+                <input type="text" name="username" value="{{dvd.BookingPickup}}" readonly><br><br>
+                <br><br>
+                <button type="submit" data-dismiss="modal">checkout</button>
+              </form> 
+      </div>
+  
+            <div class="modal-div"></div>
+          </div>
+        </div>
+      </div>
+      <!-- end modal -->
+
+    {%endfor%}
+
+  
+
+    <!-- The Modal1 -->
+    <div class="modal" id="mymodal1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Add Movie</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data" action="model_form_upload">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit">Upload</button>
+            </form>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- The Modal2 -->
+    <div class="modal" id="mymodal2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Add User</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <form action="register2" method="POST">
+                {% csrf_token %}
+                <input type="text" name="first_name" placeholder="First Name"><br>
+                <input type="text" name="last_name" placeholder="Last Name"><br>
+                <input type="text" name="username" placeholder="Username"><br>
+                <input type="email" name="email" placeholder="Email"><br>
+                <input type="submit" value="Add">
+              </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- end modal -->
+
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if dvds.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ dvds.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ dvds.number }} of {{ dvds.paginator.num_pages }}.
+            </span>
+    
+            {% if dvds.has_next %}
+                <a href="?page={{ dvds.next_page_number }}">next</a>
+                <a href="?page={{ dvds.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

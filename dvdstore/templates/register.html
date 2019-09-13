@@ -56,6 +56,10 @@
                         </div>
 
                         <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="ID" name="identification">
+                        </div>
+
+                        <div class="input-group">
                             <input class="input--style-3" type="password" placeholder="Password" name="password1">
                         </div>
 
@@ -70,6 +74,14 @@
             </div>
         </div>
     </div>
+
+    <div>
+        {% if messages %}
+      {%for message in messages%}
+        <script>alert('{{message}}')</script>
+      {%endfor%}
+      {% endif %}
+      </div>
 
     <!-- Jquery JS-->
     <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>

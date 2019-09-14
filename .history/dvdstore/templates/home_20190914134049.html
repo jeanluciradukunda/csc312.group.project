@@ -1,0 +1,177 @@
+{%load static %}
+{% static "images" as baseUrl %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'homestyle.css'%}">
+</head>
+<body>
+    <!-- Page Heading -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky"  style="background-color: rgba(178, 34, 34, 0.781);">
+      <a class="navbar-brand" href="#" style="color:white">VideoHaul</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/" style="color: white">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+              {% if user.is_staff %}
+            <a class="nav-link" href="clerk" style="color: white">Clerk</a>
+              {%endif%}
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
+              Categories
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="?gen=Action">Action</a>
+                  <a class="dropdown-item" href="?gen=Comedy">Comedy</a>
+                  <a class="dropdown-item" href="?gen=Drama">Drama</a>
+                  <a class="dropdown-item" href="?gen=Family">Family</a>
+                  <a class="dropdown-item" href="?gen=Romance">Romance</a>
+                  <a class="dropdown-item" href="?gen=Horror">Horror</a>
+            </div>
+          </li>
+          <li class="nav-item" style="color: white">
+              {% if not user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="accounts/register">Register</a>
+              </li>
+               <li>
+                 <a class="nav-link" href="accounts/login">Login</a>
+              </li>
+              {%else%}
+              <li></li>
+                <a class="nav-link" href="accounts/logout">Logout</a>
+                <li></li><li>
+                <a class="nav-link" href="user_detail">My Details</a>
+                </li>
+              {%endif%}
+          </li>
+        </ul>
+        <form method="GET" action="" class="form-inline my-2 my-lg-0">
+            <a> Hello, {{user.first_name}}  .</a> <br>
+          <input class="form-control mr-sm-2" name ='query' type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    <!-- END OF PAGE HEADING -->
+
+    <!-- PAGE CONTENT -->
+  <div class="container card-group col-md-auto">
+    {% for dvd in dvds %}
+    <div class="col-md-4">
+      <div class="card grid-wrapper text-white bg-dark mb-3" style="height: 60rem">
+        <img class="img-fluid rounded card-img-top" src="{{dvd.ImageDVD.url}}" width="400" height="200" style="box-shadow: 3px 3px rgba(83, 83, 83, 0.644);">
+        <div class="card-body">
+          <h5 class="card-title">{{dvd.Title}}</h5>
+          <h6 class="card-title" style="display: inline-block">{{dvd.genre}} : </h6>
+          <h6 class="card-title" style="display: inline-block">{{dvd.year}}</h6>
+          <h6 class="card-title">R{{dvd.PriceDVD}}</h6>
+          <div class='post-body'>
+            <p class="card-text">{{dvd.Synopsis|safe|truncatewords:"20"|linebreaks}}</p>
+            <a href="https://en.wikipedia.org/wiki/{{ dvd.Title}}" style="color:crimson">read more</a>
+          </div>
+
+          {%if dvd.InStock %}
+            <a class="btn btn-success " href="#" data-toggle="modal" style="pointer-events: none;" >In Stock</a>
+            {%if user.is_authenticated%}
+              <a class="btn btn-light " href="#" data-toggle="modal" data-target="#mymodal{{dvd.id}}" >Book DVD</a>
+            {%endif%}
+          {%else %}
+            <a class="btn btn-danger" href="#" style="pointer-events: none; color:darkslategray">Out Of Stock</a>
+          {%endif%}
+          </div>
+        </div>
+      </div>
+    {%endfor%}
+
+    {%for dvd in dvds%}
+          <!-- The Modal -->
+          <div class="modal" id="mymodal{{dvd.id}}">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">{{dvd.Title}}</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  {{dvd.Synopsis|safe|truncatewords:"20"|linebreaks}}
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                        <form action="booking" enctype="multipart/form-data" method="POST">
+                          {% csrf_token %}
+                          <label >DVD ID:</label>
+                          <input type="text" name="dvdID" value="{{dvd.id}}" readonly><br>
+                          <br>
+                          <label >Book DVD for:</label>
+                          <input type="text" name="username" value="{{user.username}}" readonly><br><br>
+                          
+                          <button type="submit">book</button>
+                        </form> 
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- end modal -->
+      {%endfor%}
+  </div>
+<!-- END OF CONTENT -->
+
+<div>
+  {% if messages %}
+{%for message in messages%}
+  <script>alert('{{message}}')</script>
+{%endfor%}
+{% endif %}
+</div>
+
+
+<footer>
+<!-- Pagination -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if dvds.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ dvds.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ dvds.number }} of {{ dvds.paginator.num_pages }}.
+                </span>
+        
+                {% if dvds.has_next %}
+                    <a href="?page={{ dvds.next_page_number }}">next</a>
+                    <a href="?page={{ dvds.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        <!-- END OF PAGNATION -->
+</footer>
+  
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="script.js"></script>
+</body>
+</html>

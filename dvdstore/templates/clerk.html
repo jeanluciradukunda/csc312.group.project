@@ -75,60 +75,6 @@
 <!-- END OF NAVIGATION BAR -->
 
 <!-- TABLES -->
-{%if not user.is_superuser %}
-    <!-- DVD Table -->
-    <div class="container">
-          <div class="card" style="table-layout: fixed;">
-            <div class="card-body"></div>
-                  <p class="" style="font: bold; color:firebrick">DVD Table</p>
-                    <div class="table-body">
-                            <table class="table table-striped table-dark">
-                                    <thead>
-                                      <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Movie</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Year</th>
-                                        <th scope="col">Genre</th>
-                                        <th scope="col">Booked By</th>
-                                        <th scope="col">In Stock</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for dvd in dvds %}
-                                      <tr>
-                                        <th scope="row">{{dvd.id}}</th>
-                                        <td>{{dvd.Title}}</td>
-                                        <td>{{dvd.Synopsis|safe|truncatewords:"10"|linebreaks}}</td> 
-                                        <td>{{dvd.year}}</td>
-                                        <td>{{dvd.genre}}</td>
-                                        <td>{{dvd.BookingPickup}}</td>
-                                        <td>{{dvd.InStock}}</td>
-                                        <td>
-                                            {%if dvd.InStock %}
-                                                  {%if not dvd.BookingPickup == 'None' %}
-                                                      <button type="button" class="btn btn-success badge-pill" data-toggle="modal" data-target="#checkout{{dvd.id}}" style="float: right">Check Out</button>
-                                                  {%else%}
-                                                      <button type="button" class="btn btn-success badge-pill" style="pointer-events: none; color:darkslategray" data-toggle="modal" data-target="#checkout{{dvd.id}}" style="float: right">Check Out</button>
-                                                  {%endif%}
-                                            {%else %}
-                                              <button type="button" class="btn btn-danger badge-pill" style="float: right">Check In</button>
-                                            {%endif%}
-                                        </td>
-                                        {% if user.is_superuser %}
-                                        <td><button type="button" class="btn btn-dark badge" style="color:firebrick; font-size:2rem"><strong>X</strong></button></td>
-                                        {%endif%}
-                                      </tr>
-                                    {%endfor%}
-                                    </tbody>
-                                  </table>
-                    </div>
-            </div>
-          </div>  
-    </div>
-    <!-- end TABLE -->
-    {%else%}
-
     <!-- DVD TABLE -->
     <div class="container">
         <div class="card" style="table-layout: fixed;">
@@ -190,7 +136,7 @@
         </div>  
   </div>
   <!-- end TABLE -->
-    {%endif%}
+  
 
   <!-- END OF ALL TABLES -->
 

@@ -58,7 +58,12 @@
 
           <li class="nav-item ">
             {% if user.is_superuser %}
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal2" style="color: white">Add User</a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal2" style="color: white">Add Staff</a>
+            {%endif%}
+          </li>
+          <li class="nav-item ">
+            {% if user.is_superuser %}
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#mymodal3" style="color: white">Add Customer</a>
             {%endif%}
           </li>
           </ul>
@@ -263,7 +268,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-              <h4 class="modal-title">Add User</h4>
+              <h4 class="modal-title">Add Staff</h4>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -288,6 +293,37 @@
         </div>
       </div>
       <!-- end modal -->
+
+      <!-- The Modal3 -->
+    <div class="modal" id="mymodal3">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Add Customer</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form action="register3" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              
+              {{ addCustomerForm.as_p }}
+              <button type="submit">Add</button>
+            </form>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- end modal -->
 
 
     <!-- Pagination -->

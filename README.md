@@ -1,9 +1,8 @@
 # csc312.group.project
 
-TEMPLATES - This is where we store our HTML Files
-STATIC - This is where we do our CSS
-WEBAPP - This is where we do our methods in pyhton
+The finished DSMS can be accessed via the URL provided below as a fully functional web application. Test login details are also provide below.
+•    To create a new customer simply register
+•    To create a new clerk login with the manager details provided below and create a new clerk.
 
-WEBAPP :
--models; Using Classes to store information
--views ; Defining our methods and sending it to HTML
+Link to live WEBSITE :
+http://videohaul.pythonanywhere.com/
